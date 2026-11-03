@@ -84,18 +84,27 @@ If it's not public, delete the fallback and go straight to the new shape (no ves
 
 ## Report format
 
-Lead with a one-line verdict, then findings ordered by severity. Each finding says what was wrong and what you changed:
+Lead with a one-line verdict, then findings ordered by severity. Each finding says what was wrong and what you changed.
+
+Label a finding with a short name for the rule it broke. Never write "Rule" or a rule number.
+
+- `[Effect]` — a useEffect that is not external sync
+- `[Source of truth]` — a new field that should have been derived
+- `[State]` — loose booleans where one enum would do
+- `[Abstraction]` — a DRY helper missing, or a flow forced through one function
+- `[Bandaid]` — a guard hiding the real cause
+- `[Compat]` — a fallback for code that has not shipped
 
 ```markdown
 **Verdict:** <fixed / fixed with open items / needs rethink> — <one sentence why>
 
 **Breaking changes:** <list, or "none">
 
-1. **[Rule] path/to/file.ts:L12-L30** — <what was wrong, in one or two sentences>
+1. **[Bandaid] path/to/file.ts:L12-L30** — <what was wrong, in one or two sentences>
    Fixed: <what you changed, naming the source of truth / helper / enum used>
 
 **Not fixed (needs your call):**
-- **[Rule] path/to/file.ts:L40** — <issue, why it wasn't auto-fixed, proposed fix>
+- **[Compat] path/to/file.ts:L40** — <issue, why it wasn't auto-fixed, proposed fix>
 
 **Verified:** <tests run + type-check result, or what couldn't be verified>
 ```
