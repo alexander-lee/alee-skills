@@ -1,150 +1,71 @@
 ---
 name: what-else
-description: "How to build, check, and post a What-else drop: two code-rendered stills of the same product job. The first is bad UX with good UI that follows the specified design system. The second is generic AI slop, posted with an analysis of what is generic about that image. Use whenever you are making or posting a What-else drop."
+description: "How to build, check, and post a What-else drop: two code-rendered stills of one simple product task. The first follows the specified design system and does that task in a wacky way. The second is a high-fidelity execution of a generic prompt, then a summary of what feels generic about the result. Use whenever you are making or posting a What-else drop."
 license: MIT
 compatibility: Tuned for Grok Bot; adapts to other agents that can run code, read a repo, and post to Slack. Needs Node and Playwright. Stills only, no video.
 ---
 
 # What-else
 
-A drop is two stills of one job. Same facts. Different craft.
+A drop is two stills of one simple task the product already does.
 
-1. **Bad UX (good UI).** Follows the specified design system. Looks like it shipped. One UX failure.
-2. **Generic AI slop.** The same job in the default generated look. The caption analyzes what is generic about this image.
+1. **Bad UX (good UI).** The UI follows the specified design system. The way the task gets done is incredibly wacky. You invent the way.
+2. **A generic prompt, rendered.** You write a generic prompt for that same task, execute it at high fidelity, then look at the result and summarize what feels generic. You are not trying to make slop. You are finding out what a generic prompt produces.
 
-People should be able to cover the logo and still tell which screen is the product.
+Invent both. This skill has no menu of gags, layouts, or traits. Do not reach for a pattern you already know. If a choice is here because you have seen it before, throw it out and make another.
 
-## 1. What you keep on disk
+## Notes
 
-Three notes, written at setup, updated when the product changes:
+- **Design system.** Piece 1 only. The spec the user pasted, or a short note from the repo or the live page. Don't ask them to review it. A pasted spec wins.
+- **Log.** After a drop, one line naming the task, so you don't repeat it. Read the log only for that. Do not mine it for ideas.
 
-- **Design system.** The spec the user pasted, or a short note you wrote from the repo or the live page. Don't ask them to review it. Colors, type (families and weights), spacing, radii, shadow, components, logo, voice. This is the only source of visual decisions for piece 1. A pasted spec wins.
-- **Jobs.** Real tasks the product already has (cancel a plan, invite someone, empty a project, change a permission). One sentence each, plus the facts a screen would show. No customer names, quotes, or ticket ids.
-- **Log.** One line per drop: job, the UX failure, the slop tells used. Read it before picking the next pair. Do not reuse a failure from the last five drops. Do not reuse a majority of the same slop tells from the last drop.
+## The task
 
-## 2. The shared job
+Pick one simple thing a person already does in the product. Then build. Don't workshop a list.
 
-Pick one job from the jobs note. Write a facts file first. Both scenes import it. Names, prices, dates, and counts match. If a fact is on one screen and not the other, the comparison is unfair. Fix the screens.
+## Bad UX (good UI)
 
-```
-job: Cancel Pro
-goal: stop the renewal without losing work already shared
-facts:
-  plan: Pro
-  price: $29/mo
-  renews: April 12
-  keeps: projects already shared
-```
+Draw it only with the design system. Type, color, spacing, radius, shadow, components, logo, voice. It looks like the product. A visual check would pass it.
 
-Use real product facts when you know them. Invent a specific fact rather than writing "Your plan". Never use lorem, "John Doe", or "Acme".
+The interaction is the bad part: an incredibly wacky way to do that simple thing. The procedure is yours. Don't break the UI to sell the joke. Don't do an ordinary mistake. The method is what's strange. The task stays simple.
 
-Write the pair brief before building (template in `examples/pair-brief.md`).
+Caption, after the image: **Bad UX (good UI)**, then the task and how this screen makes the person do it. No lesson about design systems.
 
-## 3. Bad UX (good UI)
+## The generic prompt
 
-The screen uses only the specified design system. Type, color, radius, shadow, buttons, and logo from that spec. Copy in the product's voice. Alignment, spacing, and contrast are correct. A visual QA would pass it.
+Write the prompt first. Do not edit it after you build. It asks for the same simple task and nothing else. No design system. No art direction. No request to look generic, and no request to look original.
 
-One failure, visible on the screen without the caption. Readable in a couple of seconds. Pick one the log allows:
+Execute that prompt at high fidelity. Polished, specific, finished, faithful to the prompt. Do not apply the design system. Do not steer the screen toward a look or away from one. Do not import piece 1's styles.
 
-| Failure | What the screen shows |
-|---|---|
-| Confirm before the facts | A real dialog asks for the decision before the plan, the date, or what the person keeps is on screen. |
-| Dangerous action is the primary | The destructive verb wears the primary button. The safe action is a quiet text button. Both are real components. |
-| Asks for what it already has | The form asks for email, plan, or company the product already stores. The fields look correct. |
-| Next step drops the work | Save, done, or continue leaves the thing they just made off screen. |
-| Equal options, wrong default | Every choice is the same component. The one people need is not selected. |
-| Mechanism, not outcome | The label names the setting ("Webhook retries") and not what will happen. |
-| Extra step | A real form step exists only to collect an email or a reason. |
-| Success lies | The copy says it worked. The screen still shows the old state. |
-| You are nowhere | The real nav is on screen and the current place is not indicated. |
-| Disabled, no reason | A real control is disabled and nothing on the screen says why. |
+When the PNG exists, look at it and write what feels generic. Only what you can see in this image. The summary is a finding, not a build step. Do not change the screen so the summary has more to say. If little feels generic, say that.
 
-The failure has to be possible inside the design system. If showing it means breaking alignment, color, or type, pick a different failure. Do not stack two. Do not make the UI ugly so the point is obvious. Do not use slop words (unlock, seamless, supercharge, effortless, elevate, in seconds).
+Post the prompt with the image, then the summary under **What feels generic**.
 
-Caption, after the image:
+## Build
 
-```
-**Bad UX (good UI)**
-Confirm before the facts. The dialog uses the real type, buttons, and color. It asks you to cancel Pro before the plan, the April 12 renewal, or the shared projects are anywhere on screen.
-```
+Two scenes, one app. React + Vite, plain CSS. Piece 1's CSS uses only the design system. Piece 2's CSS is its own file and comes only from executing the prompt.
 
-Name the failure in the first sentence. Then say what the screen withheld or did in the wrong order. Do not say the UI looks bad. Do not explain design systems.
+- Stage: **960×600 CSS px**. Playwright screenshot, **deviceScaleFactor 2** (1920×1200 PNG). Built bundle, not the dev server.
+- Wait for `document.fonts.ready`. Piece 1 aborts unless the design-system families and weights loaded.
+- No garbled text. No AI-generated imagery, no stock photos, no video.
+- Dated folder. `out/on-system.png`, `out/prompt.png`, the prompt in `prompt.txt`, `CHECKPOINT.json`. Resume from the checkpoint. Don't overwrite an older drop.
 
-## 4. Generic AI slop
+## Check
 
-Same job, same facts. None of the product's font, accent, radius, shadow, logo, or components. If a teammate could mistake it for the product, rebuild it.
+Open both PNGs. Don't judge from the code.
 
-Build the genericity on purpose. Use at least five tells, and cover three kinds: one in the copy, one in the layout, one in color or type. Every tell has to be visible in the PNG.
+1. Piece 1 looks like the product. The wacky part is the procedure.
+2. Piece 2 is a high-fidelity execution of `prompt.txt`, and the prompt was not rewritten after the screenshot.
+3. The summary refers only to what is visible. The screen was not adjusted to fit the summary.
 
-- Indigo, violet, or blue gradient. Gradient text. Or a purple glow on a dark canvas with blurred orbs in the corners.
-- Inter, or another neutral grotesk that is not the product font. A display serif on one word of the headline.
-- Three equal cards: icon in a soft tinted circle, short title, two lines of body.
-- Four identical stat tiles, plus a chart with no claim.
-- Marketing verbs: unlock, elevate, seamless, supercharge, effortless, next-gen, in seconds.
-- "Get started" and "Learn more" as the actions, including when the job is a specific verb like cancel or invite.
-- One radius and one soft shadow on every surface.
-- A centered stack. No dense region, no quiet region.
-- A fake person: full name, "Product Designer" or "Founder", colored-initial avatar.
-- A "Trusted by" row of gray wordmarks.
-- A sidebar of every destination, all the same weight.
-- Emoji in the headline or as the status.
+## Posting
 
-Put the real facts on the screen and let the template bury them. That burial is a tell you can analyze. Do not copy a real company's homepage or use their logo. The target is the genre.
+From the bot's own Slack app.
 
-## 5. The analysis
-
-Posted after the slop image. Four to six bullets. Each bullet names something in this image, then why that choice is the default. No bullet that is not visible. No essay. No "soulless", "vibes", or a lecture about AI.
-
-```
-**Generic AI slop**
-Same job: cancel Pro. The $29 and the April 12 date are in the third card.
-
-- The headline is a violet gradient on "Elevate". This is a cancel screen. The gradient is doing the job of a hero the screen doesn't have.
-- Inter and indigo, radius 16 on every box. None of that is the product.
-- Three equal cards, each an icon in a tinted circle plus two lines. Cancel sits at the same weight as "Learn more".
-- "Get started" is the primary button. The verb for this job is cancel.
-- "Sarah Chen, Product Designer" under a "Trusted by" row. She is not a customer. The row is not the product's.
-```
-
-A bad analysis recites the menu ("it uses a gradient, three cards, and Inter") without saying where they are or why they hurt this job. Delete any bullet that would still be true if you swapped the image for another slop screen.
-
-One last sentence is allowed: the UX is also worse, and the styling is why a person notices the styling first. One sentence. The bullets stay about what is generic.
-
-## 6. Build
-
-Two scenes, one app. React + Vite, plain CSS. The facts file is imported by both. Piece 1's CSS uses only tokens from the design system, in one file. Piece 2 has its own CSS and does not import that file.
-
-- Stage: **960×600 CSS px**. Screenshot with Playwright, **deviceScaleFactor 2** (1920×1200 PNG).
-- Screenshot the built bundle, not the dev server.
-- Wait for `document.fonts.ready`. Piece 1 aborts unless each family and weight in the design system actually loaded. Piece 2 must load its slop face and must not request the product font.
-- Real copy. A garbled string in either PNG is a failure.
-- No AI-generated imagery, no stock photos, no video, no animation.
-
-Per-run folder with the date in the name. Write `facts.ts`, both scenes, `out/on-system.png`, `out/slop.png`, and `CHECKPOINT.json` (`on-system`, `slop`, `captions`, `posted`). An interrupted run resumes from the checkpoint. Do not overwrite an older drop.
-
-## 7. Check before posting
-
-Open both PNGs. Look at them. Do not judge from the code.
-
-1. Piece 1 uses only specified tokens. A color, font, or radius that is not in the design system fails it. Fix or rebuild.
-2. Piece 1's failure is visible without the caption, and it is the one the brief named.
-3. Piece 1 would pass a visual check: alignment, contrast, type, no overflow, no slop words.
-4. Piece 2 does not use the product font, accent, radius, or logo.
-5. Every analysis bullet points at something you can see in `out/slop.png`. Delete the rest.
-6. The facts match across the two files and both screens.
-
-Replace a weak piece. Do not post one you would be embarrassed by. Note small leftover flaws in the log and still post only if the lesson holds.
-
-## 8. Posting
-
-From the bot's own Slack app. Post in this order:
-
-1. One or two sentences. Name the job. Say that the first screen follows the design system and the second is the generic version. No manifesto.
+1. One or two sentences naming the simple task.
 2. `out/on-system.png`, then the Bad UX (good UI) caption.
-3. `out/slop.png`, then the analysis.
+3. The generic prompt, then `out/prompt.png`, then what feels generic.
 
-Use `**Bad UX (good UI)**` and `**Generic AI slop**` so the channel can scan. Do not number the posts. Read the channel back to confirm each image landed. Delete the stray filename message an upload leaves behind. Before retrying, check that it did not already post.
+Don't number the posts. Confirm each image landed. Delete the stray filename message. Send the owner one line with the intro link. If posting fails, send the images and words to the owner. If nothing is worth posting, say what blocked it.
 
-Send the owner one line with the link to the intro. If posting fails, send the images and captions to the owner and say it failed. If nothing is worth posting, say what blocked it. Do not post an old drop again.
-
-No customer names, quotes, ticket ids, or internal notes in the channel.
+No customer names, quotes, ticket ids, or internal notes.
